@@ -1,0 +1,11 @@
+class Solution(object):
+    def generate(self, numRows):
+        r=[]
+        for i in range(1,numRows+1):
+            r.append([0]*i)
+        for i in range(numRows):
+            r[i][0] = 1
+            r[i][i] = 1
+            for j in range(1,i):
+                r[i][j] = r[i-1][j-1] + r[i-1][j]
+        return r
