@@ -1,0 +1,11 @@
+class Solution(object):
+    def maxProfit(self, nums):
+        mini=9999
+        prof=0
+        for i in range(len(nums)):
+            if nums[i] < mini:
+                mini = nums[i]
+            elif nums[i]-mini > prof:
+                prof = nums[i] - mini
+            
+        return prof
