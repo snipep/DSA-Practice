@@ -1,0 +1,28 @@
+class Solution(object):
+    def nextPermutation(self, nums):
+        if len(nums) ==1:
+            return
+        leng=len(nums)
+        c=0
+        c1=0
+        for i in range(len(nums)-2,-2,-1):
+            if nums[i] < nums[i+1]:
+                c=i
+                break
+        print(c)
+        if c < 0:
+            nums.reverse()
+        else:
+            for j in range(len(nums)-1,c,-1):
+                if nums[j] > nums[c]:
+                    c1=j
+                    break
+            print(c1)
+            nums[c],nums[c1]=nums[c1],nums[c]
+            print(nums)
+            nums[c + 1:] = nums[ c + 1:][::-1]
+            print(nums)
+
+
+
+    
