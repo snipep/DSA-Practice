@@ -1,0 +1,14 @@
+class Solution(object):
+    def rotate(self, nums):
+        l=len(nums[0])
+        for i in range(len(nums)):
+            for j in range(i,len(nums)):
+                nums[i][j],nums[j][i] = nums[j][i],nums[i][j]
+        print(nums)
+        for i in nums:
+            i=i.reverse()
+           
+
+        return nums
+
+  
