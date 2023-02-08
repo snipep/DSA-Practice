@@ -1,0 +1,26 @@
+def repeatedNumber(self, arr):
+        num=arr[0]
+        set_bit_no = 0
+        for i in range(1,n):
+            num = arr[1] ^ num
+        for i in range(1,1+n):
+            num = i ^ num
+
+        # x ^ y = num
+        set_bit_no = num & ~(num - 1)
+        
+        x,y=0,0
+        for i in range(len(arr)):
+            if arr[i] & set_bit_no:
+                x = x ^ arr[i]
+            else:
+                y = y ^ arr[i]
+
+
+        for i in range(1, len(arr) + 1):
+            if i & set_bit_no:
+                x = x ^ i
+            else:
+                y = y ^ i
+            
+        count = 0
