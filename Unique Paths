@@ -1,0 +1,23 @@
+#USING PERMUTATION & LOGIC
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        N = m + n -2
+        r = m-1
+        res =1
+        for i in range(1,r+1):
+            res = res * (N-r+i)/i
+        return int(res)
+        
+        
+#USING RECURESION 
+#TC=EXPONENTIAL
+def countpath(i,j,m,n):
+    if i == m-1 and j == n-1:
+        return 1
+    if i >= m or j >= n:
+        return 0
+    else:
+        return countpath(i+1,j,m,n) + countpath(i,j+1,m,n)
+        
+
+print(countpath(0,0,3,2))        
