@@ -1,0 +1,11 @@
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        res = []
+        mp = {}
+        for i in range(len(nums)):
+            if (target - nums[i]) in mp:
+                res.append(mp[target - nums[i]])
+                res.append(i)
+                return res
+            mp[nums[i]] = i
+        return res
