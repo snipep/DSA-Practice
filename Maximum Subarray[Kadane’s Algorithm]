@@ -1,3 +1,4 @@
+#Kadane’s Algorithm
 class Solution(object):
     def maxSubArray(self, nums):
         sum=0
