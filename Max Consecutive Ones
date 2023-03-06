@@ -1,0 +1,14 @@
+T.C ==>> O(N)
+S.C ==>> O(1)
+
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        counter = 0
+        max1 = 0
+        for i in range(len(nums)):
+            if nums[i] == 1:
+                counter += 1
+                max1 = max(counter,max1)
+            else:
+                counter = 0
+        return max1
