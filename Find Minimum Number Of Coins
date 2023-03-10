@@ -1,0 +1,13 @@
+T.C ==> O(N)
+S.C ==> O(1)
+
+denominations = [1, 2, 5, 10, 20, 50, 100, 500, 1000]
+def findMinimumCoins(amount):
+
+	ans = 0
+	count = 0
+	for i in range(len(denominations)-1,-1,-1):
+		count = amount//denominations[i]
+		ans += count
+		amount -= denominations[i]*count
+	return ans
