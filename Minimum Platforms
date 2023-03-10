@@ -1,0 +1,17 @@
+T.C ==> O(N)
+S.C ==> O(1)
+start.sort()
+end.sort()
+ans = 1
+plat = 1 
+i,j = 0,0 
+
+while i < len(start) and j < len(end):
+    if start[i] <= end[j] :
+        plat += 1
+        i += 1
+    else:
+        plat -= 1
+        j += 1
+    ans = max(plat,ans)
+print(ans)
