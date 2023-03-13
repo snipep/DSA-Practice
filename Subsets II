@@ -1,0 +1,17 @@
+def subsetsWithDup(nums):
+    ans = []
+    ds = []
+    def subsetwithoutdup(ind: int):
+        print(ds[:])  			
+        ans.append(ds[:])
+        for i in range(ind,len(nums)):
+            if i != ind and nums[i] == nums[i-1]:
+                continue
+            ds.append(nums[i])
+            subsetwithoutdup(i + 1)
+            ds.pop()
+    nums.sort()
+    subsetwithoutdup(0)
+    return ans
+    
+print(subsetsWithDup([1,2,2]))
