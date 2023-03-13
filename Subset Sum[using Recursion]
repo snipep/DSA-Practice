@@ -1,0 +1,16 @@
+T.C ==>> O(2^N + 2^NLog(2^N))[[Recursion]+[Sorting the recursive ans]]
+
+def subsetSum(num: List[int]) -> List[int]:
+    ans = []
+    n = len(num)
+    def subsetSumsHelper(ind: int, sum: int):
+        if ind == n:
+            ans.append(sum)
+            return
+        # element is picked
+        subsetSumsHelper(ind + 1, sum + num[ind])
+        # element is not picked
+        subsetSumsHelper(ind + 1, sum)
+    subsetSumsHelper(0, 0)
+    ans.sort()
+    return ans
