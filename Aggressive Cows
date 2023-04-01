@@ -1,0 +1,26 @@
+def is_possible(positions,n,c,mid):
+    cnt = 1
+    last_pos = positions[0]
+    for i in range(1,n):
+        if positions[i] - last_pos >= mid:
+            cnt += 1
+            last_pos = positions[i]
+    if cnt >= c:
+        return True
+    return False
+
+def chessTournament(positions, n , c):
+    positions.sort()
+    if c > n:
+        return -1
+
+    low = 1
+    high = positions[n-1] - positions[0]
+
+    while low <= high:
+        mid = (low + high) // 2
+        if is_possible(positions,n,c,mid):
+            low = mid + 1
+        else:
+            high = mid - 1
+    return high
