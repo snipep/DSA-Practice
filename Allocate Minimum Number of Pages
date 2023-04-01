@@ -1,0 +1,36 @@
+def is_possible(time,mid,n):
+    cnt = 0 
+    total_sum = 0
+    for i in range(len(time)):
+        if total_sum + time[i] > mid:
+            cnt += 1
+            total_sum = time[i]
+            if total_sum > mid:
+                return False
+        else:
+            total_sum += time[i]
+    if cnt < n:
+        return True
+    return False
+
+
+def ayushGivesNinjatest(n, m, time):
+    if n > m:
+        return -1
+
+    low = time[0]
+    high = 0 
+    for i in range(m):
+        high += time[i]
+        low = min(low,time[i])
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if is_possible(time,mid,n):
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    return low
+    
