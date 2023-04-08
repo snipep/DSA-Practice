@@ -1,0 +1,33 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+# Stack class.
+class Stack:
+    
+    def __init__(self, capacity: int):
+        self.top1 = -1
+        self.size = capacity
+        self.arr = [-1] * self.size
+
+    def push(self, num: int) -> None:
+        self.top1 += 1
+        self.arr[self.top1] = num
+
+    def pop(self) -> int:
+        x = self.arr[self.top1]
+        self.top1 -= 1
+        return x
+
+    def top(self) -> int:
+        return self.arr[self.top1]
+    
+    def isEmpty(self) -> int:
+        return 1 if self.top1 == -1 else 0
+    
+    def isFull(self) -> int:
+        if self.top1 == self.size - 1:
+            return 1
+        else:
+            return 0
