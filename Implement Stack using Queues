@@ -1,0 +1,37 @@
+class MyStack:
+    def __init__(self):
+        self.q1 = []
+        self.q2 = []
+        self.currsize = 0
+
+    def push(self, x: int) -> None:
+        self.currsize += 1
+        self.q2.append(x)
+        for i in range(len(self.q1)):
+            self.q2.append(self.q1[i])
+        self.q1.clear()
+        self.q1 , self.q2 = self.q2 , self.q1
+
+    def pop(self) -> int:
+        if len(self.q1) == 0:
+            return 0
+        self.currsize -= 1
+        popped = self.q1.pop(0)
+        return popped
+
+    def top(self) -> int:
+        if len(self.q1) == 0:
+            return None
+        return self.q1[0]
+
+    def empty(self) -> bool:
+        return self.currsize == 0
+        
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
