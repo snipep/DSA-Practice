@@ -1,0 +1,43 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+class Queue :
+    #Define data members and __init__()
+    def __init__(self):
+        self.start = -1
+        self.end = -1
+        self.currsize = 0
+        self.maxsize = 1000
+        self.arr = [-1] * self.maxsize
+
+    def enqueue(self, data):
+        if self.currsize == self.maxsize:
+            exit(1)
+        if self.end == -1:
+            self.end = 0
+            self.start = 0
+        else:
+            self.end = (self.end + 1) % self.maxsize
+        self.arr[self.end] = data
+        self.currsize += 1
+
+    def dequeue(self) :
+        if self.currsize == self.maxsize:
+            exit(1)
+        popped = self.arr[self.start]
+        if self.currsize == 1:
+            self.end = -1
+            self.start = -1
+        else:
+            self.start = (self.start + 1) % self.maxsize
+        self.currsize -= 1
+        return popped
+
+
+    def front(self) :
+        return self.arr[self.start]
+   
+    def isEmpty(self) :
+        return self.currsize = 0 
