@@ -1,0 +1,34 @@
+T.C ==>> O(3N)
+from typing import List
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        leftsmall = [0] * n
+        st1 = []
+        rightsmall = [0] * n
+        st2 = []
+        maxA = 0
+        # filling the left smaller element in the index
+        for i in range(n):
+            while st1 and heights[st1[-1]] >= heights[i]:
+                st1.pop()
+            if st1:
+                leftsmall[i] = st1[-1] + 1
+            else:
+                leftsmall[i] = 0 
+            st1.append(i)
+            
+        # filling the right smaller element in the index
+        for i in range(n-1,-1,-1):
+            while st2 and heights[st2[-1]] >= heights[i]:
+                st2.pop()
+            if st2:
+                rightsmall[i] = st2[-1] - 1
+            else:
+                rightsmall[i] = n-1
+            st2.append(i)
+        for i in range(n):
+            maxA = max(maxA, heights[i] * (rightsmall[i] - leftsmall[i] + 1));
+        return maxA
+        
