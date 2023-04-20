@@ -1,0 +1,22 @@
+def find_celebrity(n, knows):
+    # start by assuming the first person is the celebrity
+    candidate = 0
+
+    # check if candidate knows anyone else
+    for i in range(1, n):
+        if knows[candidate][i]:
+            candidate = i
+
+    # check if candidate is really the celebrity
+    for i in range(n):
+        if i != candidate:
+            if knows[candidate][i] or not knows[i][candidate]:
+                return -1
+
+    return candidate
+
+
+   
+knows = [[0, 0], [1, 0]]
+n = len(knows)
+print(find_celebrity(n, knows))
