@@ -1,0 +1,48 @@
+T.C ==>> O(1)
+S.C ==>> O(N)
+
+import sys
+class MinStack:
+
+    def __init__(self):
+        self.st = []
+        self.mini = sys.maxsize
+
+    def push(self, val: int) -> None:
+        val = int(val)
+        if not self.st:
+            self.st.append(val)
+            self.mini = val
+        else:
+            if val < self.mini:
+                self.st.append(2 * val - self.mini)
+                self.mini = val
+            else:
+                self.st.append(val)
+
+    def pop(self) -> None:
+        if not self.st:
+            return
+        el = self.st.pop()
+        if el < self.mini:
+            self.mini = 2 * self.mini - el
+
+    def top(self) -> int:
+        if not self.st:
+            return -1
+        el = self.st[-1]
+        if el < self.mini:
+            return self.mini
+        return el
+
+    def getMin(self) -> int:
+        return self.mini
+        
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
