@@ -1,0 +1,24 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+# Binary tree node class for reference
+class BinaryTreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def getLeftView(root)->list:
+    ds = []
+    curr = root
+    def leftview(curr,level):
+        if curr is None:
+            return
+        if len(ds) == level:
+            ds.append(curr.data)
+        leftview(curr.left,level+1)
+        leftview(curr.right,level+1)
+    leftview(curr,0)
+    return ds
