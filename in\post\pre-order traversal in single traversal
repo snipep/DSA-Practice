@@ -1,0 +1,44 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+from collections import deque
+# Following is the Binary Tree node structure:
+class BinaryTreeNode :
+    def __init__(self, data) :
+        self.data = data
+        self.left = None
+        self.right = None
+
+def getTreeTraversal(root):
+    inorder = []
+    preorder = []
+    postorder = []
+    stack = deque([(root, 1)])
+
+    while stack:
+        curr,num = stack.pop()
+        if curr is None:
+            continue
+
+        if num == 1:
+            preorder.append(curr.data)
+            stack.append((curr,num+1))
+            stack.append((curr.left,1))
+
+        elif num == 2:
+            inorder.append(curr.data)
+            stack.append((curr,num+1))
+            stack.append((curr.right,1))
+        elif num == 3:
+            postorder.append(curr.data)
+
+
+    return inorder,preorder,postorder
+
+
+
+
+
+
+    
