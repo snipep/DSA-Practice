@@ -1,0 +1,49 @@
+T.C == O(H) + O(H) + O(N) === O(N)      //h:height of the free // n:num of node in tree
+S.C ==>> O(N)
+
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+# Following is the Binary Tree node structure:
+class BinaryTreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def traverseBoundary(root):
+    left_boundary, right_boundary, leaf = [], [], []
+    LeftBoundary(root.left,left_boundary)
+    RightBoundary(root.right,right_boundary)
+    LeafNode(root,leaf)
+    return [root.data] + left_boundary + leaf + right_boundary[::-1]
+
+def LeftBoundary(node,left_boundary):
+    if not node or (not node.left and not node.right):
+        return 
+    left_boundary.append(node.data)
+    if node.left:
+        LeftBoundary(node.left, left_boundary)
+    else:
+        LeftBoundary(node.right, left_boundary)
+
+def RightBoundary(node,right_boundary):
+    if not node or (not node.left and not node.right):
+        return 
+    
+    right_boundary.append(node.data)
+    if node.right:
+        RightBoundary(node.right, right_boundary)
+    else:
+        RightBoundary(node.left, right_boundary)
+
+def LeafNode(node,leaf):
+    if not node:
+        return
+    if not node.left and not node.right:
+        leaf.append(node.data)
+        return
+    LeafNode(node.left, leaf)
+    LeafNode(node.right, leaf)
