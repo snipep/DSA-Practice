@@ -1,0 +1,18 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        return root is None or self.check(root.left, root.right)
+
+    def check(self, left1, right1):
+        if left1 is None or right1 is None:
+            return left1 == right1
+
+        if left1.val != right1.val:
+            return False 
+
+        return  self.check(left1.left , right1.right) and self.check(left1.right , right1.left)
