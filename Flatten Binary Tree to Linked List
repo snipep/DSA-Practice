@@ -1,0 +1,57 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+
+    # Iterative Solution With S.C ==>> O(1)
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        curr = root
+        while curr is not None:
+            if curr.left is not None:
+                prev = curr.left
+                while prev.right:
+                    prev = prev.right
+                prev.right = curr.right
+                curr.right = curr.left
+                curr.left = None
+            
+            curr = curr.right
+        return root
+
+    # Iterative Solution
+    # T.C ==>> (N)
+    #S.C ==>>O(N)
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        if root is None:
+            return None
+        st = [root]
+        while st:
+            node = st.pop()
+            if node.right is not None:
+                st.append(node.right)
+            if node.left is not None:
+                st.append(node.left)
+            if st:
+                node.right = st[-1]
+            node.left = None
+        return root
+
+    # Recursive solution
+    # T.C ==>> (N)
+    #S.C ==>>O(N)
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        def helper(root, prev):
+            if root is None:
+                return prev
+            prev = helper(root.right, prev)
+            prev = helper(root.left, prev)
+            root.right = prev
+            root.left = None
+            prev = root
+            return prev
+
+        helper(root,None)
+        
