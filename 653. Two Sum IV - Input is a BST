@@ -1,0 +1,72 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+T.C ==>> O(H)
+S.C ==>> O(N)
+class BSTIterator:
+    def __init__(self,root,isreverse):
+        self.st = []
+        self.reverse = isreverse
+        self.push_all(root)
+    
+    def next(self):
+        temp = self.st.pop()
+        if self.reverse:
+            self.push_all(temp.left)
+        else:
+            self.push_all(temp.right)
+        return temp.val
+
+    def push_all(self,root):
+        while root:
+            self.st.append(root)
+            if self.reverse:
+                root = root.right
+            else:
+                root = root.left
+
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        if not root:
+            return False
+
+        left_it = BSTIterator(root, False)
+        right_it = BSTIterator(root, True)
+
+        
+        i = left_it.next()
+        j = right_it.next()
+        while i < j:
+            if i + j == k:
+                return True
+            elif i + j < k:
+                i = left_it.next()
+            else:
+                j = right_it.next()
+        return False
+
+
+T.C ==>> O(N)
+S.C ==>> O(N)
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        if root is None:
+            return None
+        
+        st = [root]
+        seen = set()
+        while st:
+            node = st.pop()
+            if k - node.val in seen:
+                return True
+            seen.add(node.val)
+            if node.right:
+                st.append(node.right)
+            if node.left:
+                st.append(node.left)
+        return False
+            
