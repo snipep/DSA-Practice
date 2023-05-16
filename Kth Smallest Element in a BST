@@ -1,0 +1,21 @@
+T.C ==>> O(H)
+S.C ==>> O(N)
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        st = []
+        while True:
+            while root is not None:
+                st.append(root)
+                root = root.left
+            node = st.pop()
+            k -= 1
+            if not k:
+                return node.val
+            root = node.right
