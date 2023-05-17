@@ -1,0 +1,35 @@
+class BinaryTreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+
+def BTtoDLL(root):
+    if root is None:
+        return None
+
+    stack = []
+    current = root
+    prev = None
+    head = None
+
+    while stack or current:
+        # Traverse to the leftmost node
+        while current:
+            stack.append(current)
+            current = current.left
+
+        # Process the current node
+        current = stack.pop()
+
+        if prev:
+            prev.right = current
+            current.left = prev
+        else:
+            head = current  # Set the head of the doubly linked list
+
+        prev = current  # Update prev to the current node
+        current = current.right  # Move to the right subtree
+
+    return head
