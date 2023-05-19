@@ -1,9 +1,20 @@
-T.C ==>> O(N)
-
+import heapq
 class Solution:
+    # T.C ==>> O(N) + O(K * logN)
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        heap = []
+        for num in nums:
+            if len(heap) < k:
+                heapq.heappush(heap, num)
+            else:
+                heapq.heappush(heap, num)
+                heapq.heappop(heap)
+        return heap[0]
+
+
+    # T.C ==>> O(N)
     def findKthLargest(self, nums: List[int], k: int) -> int:
         k = len(nums) - k
-
         def quickSelect(l,r):
             pivot, p = nums[r],l
             for i in range(l,r):
@@ -17,5 +28,4 @@ class Solution:
                 return quickSelect(p+1,r)
             else:
                 return nums[p]
-
         return quickSelect(0,len(nums)-1)
