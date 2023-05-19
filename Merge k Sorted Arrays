@@ -1,0 +1,15 @@
+import heapq
+class Solution:
+    def mergeKArrays(self, arr, K):
+        heap = []
+        res = []
+        for i, el in enumerate(arr):
+            heapq.heappush(heap, (el[0], i, 0))
+            
+        while heap:
+            val, row_idx, col_idx = heapq.heappop(heap)
+            res.append(val)
+            if col_idx + 1 < len(arr[row_idx]):
+                heapq.heappush(heap, (arr[row_idx][col_idx+1], row_idx, col_idx+1))
+        return res
+       
