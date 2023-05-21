@@ -1,0 +1,22 @@
+class Solution:
+    def dNums(self, A, B):
+        dic = {}
+        res = []
+        for i in range(B):
+            if A[i] not in dic:
+                dic[A[i]] = 1
+            else:
+                dic[A[i]] += 1
+        res.append(len(dic))
+        
+        for i in range(B, len(A)):
+            dic[A[i - B]] -= 1
+            if dic[A[i - B]] == 0:
+                dic.pop(A[i - B])
+
+            if A[i] not in dic:
+                dic[A[i]] = 1
+            else:
+                dic[A[i]] += 1  
+            res.append(len(dic))
+        return res
