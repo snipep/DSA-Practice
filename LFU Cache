@@ -1,17 +1,21 @@
-from collections import OrderedDict
+import heapq
+from collections import defaultdict
 
 class LFUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = {}
-        self.freq = OrderedDict()
+        self.freq = defaultdict(int)
+        self.time = 0
+        self.heap = []
 
     def get(self, key: int) -> int:
         if key not in self.cache:
             return -1
         self.freq[key] += 1
-        self.freq.move_to_end(key)
+        self.time += 1
+        heapq.heappush(self.heap, (self.freq[key], self.time, key))
         return self.cache[key]
 
     def put(self, key: int, value: int) -> None:
@@ -20,17 +24,16 @@ class LFUCache:
         if key in self.cache:
             self.cache[key] = value
             self.freq[key] += 1
-            self.freq.move_to_end(key)
-            
+            self.time += 1
+            heapq.heappush(self.heap, (self.freq[key], self.time, key))
         else:
             if len(self.cache) >= self.capacity:
-                least_frequent_key = min(self.freq, key=self.freq.get)
+                while self.heap[0][2] not in self.cache or self.freq[self.heap[0][2]] != self.heap[0][0]:
+                    heapq.heappop(self.heap)
+                least_frequent_key = heapq.heappop(self.heap)[2]
                 self.cache.pop(least_frequent_key)
                 self.freq.pop(least_frequent_key)
             self.cache[key] = value
             self.freq[key] = 1
-
-# Your LFUCache object will be instantiated and called as such:
-# obj = LFUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+            self.time += 1
+            heapq.heappush(self.heap, (self.freq[key], self.time, key))
