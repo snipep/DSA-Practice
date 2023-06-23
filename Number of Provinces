@@ -1,0 +1,26 @@
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        V = len(isConnected)
+        adjls = [[] for _ in range(V)]
+        for i in range(V):
+            for j in range(V):
+                if isConnected[i][j] == 1 and i != j:
+                    adjls[i].append(j)
+                    adjls[j].append(i)
+        
+        vis = [0]*V
+        count = 0
+
+        def dfs(node, vis, adjls):
+            vis[node] = 1 
+            for i in range(len(adjls[node])):
+                if vis[adjls[node][i]] == 0:
+                    dfs(adjls[node][i], vis, adjls)
+                    
+        for i in range(V):
+            if vis[i] == 0:
+                count += 1
+                dfs(i, vis, adjls)
+                
+                
+        return count
