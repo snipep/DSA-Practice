@@ -1,0 +1,15 @@
+class Solution:
+    def dfsOfGraph(self, V, adj):
+        vis = [0]*V
+        start = 0
+        ls = []
+        
+        def dfs(node, vis, adj, ls):
+            vis[node] = 1 
+            ls.append(node)
+            for i in range(len(adj[node])):
+                if vis[adj[node][i]] == 0:
+                    dfs(adj[node][i], vis, adj, ls)
+                    
+        dfs(start, vis, adj, ls)
+        return ls
