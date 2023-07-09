@@ -1,0 +1,39 @@
+#User function Template for python3
+from collections import deque
+import sys
+from typing import List
+sys.setrecursionlimit(10**8)
+class Solution:
+    def bfs(self, row, col, grid, vis, res):
+        vis[row][col] = 1
+        queue = deque([(row, col)])
+        n = len(grid)
+        m = len(grid[0])
+        temp = []
+        temp.append([0,0])
+        
+        while queue:
+            direction = [ (0, 1), (1, 0), (0, -1), (-1, 0) ]
+            r, c = queue.popleft()
+            for dx, dy in direction:
+                nrow, ncol = r + dx, c + dy
+                if (0 <= nrow < n) and (0 <= ncol < m) and vis[nrow][ncol] == 0 and grid[nrow][ncol] == 1:
+                    vis[nrow][ncol] = 1
+                    temp.append([nrow - row, ncol - col])
+                    queue.append((nrow,ncol))
+        res.add(tuple(map(tuple, temp)))
+        
+        
+    def countDistinctIslands(self, grid : List[List[int]]) -> int:
+        n = len(grid)
+        m = len(grid[0])
+        vis = [[0] * m for _ in range(n)]
+        res = set()
+        
+        for row in range(n):
+            for col in range(m):
+                if vis[row][col] == 0 and grid[row][col] == 1:
+                    self.bfs(row, col, grid, vis, res)
+            
+        return len(res)
+         
