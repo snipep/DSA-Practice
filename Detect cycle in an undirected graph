@@ -1,0 +1,30 @@
+from typing import List
+from collections import deque
+
+class Solution:
+    def detect(self, src, adj, vis):
+        vis[src] = 1
+        queue = deque([(src, -1)])
+        
+        while queue:
+            node, parent = queue.popleft()
+            
+            for adjnode in adj[node]:
+                if vis[adjnode] == 0: 
+                    vis[adjnode] = 1
+                    queue.append((adjnode, node))
+                elif parent != adjnode:
+                    return True
+        return False
+            
+    
+    
+	def isCycle(self, V: int, adj: List[List[int]]) -> bool:
+		visited = [0]*V
+        
+        for i in range(V):
+            if visited[i] == 0:
+                if self.detect(i, adj, visited):
+                    return True
+        return False
+            
