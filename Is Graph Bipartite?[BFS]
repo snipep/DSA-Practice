@@ -1,0 +1,23 @@
+from collections import deque
+class Solution:
+    def check_using_dfs(self, src, color, grid):
+        for neighbor in grid[src]:
+            if color[neighbor] == -1:
+                color[neighbor] = 1 - color[src]
+                if not self.check_using_dfs(neighbor, color, grid):
+                    return False
+            elif color[neighbor] == color[src]:
+                return False
+        return True
+
+    def isBipartite(self, grid: List[List[int]]) -> bool:
+        V = len(grid)
+        color = [-1] * V
+
+        for i in range(V):
+            if color[i] == -1:
+                color[i] = 0
+                if not self.check_using_dfs(i, color, grid):
+                    return False
+        return True
+
