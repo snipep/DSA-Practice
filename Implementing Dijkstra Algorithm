@@ -1,0 +1,22 @@
+T.C ==>> O(E * LogV)
+
+import heapq
+from typing import List
+
+class Solution:
+    def dijkstra(self, V: int, adj: List[List[List[int]]], S: int) -> List[int]:
+        pq = [(0, S)]
+        distTo = [float('inf')] * V
+        distTo[S] = 0
+
+        while pq:
+            dis, node = heapq.heappop(pq)
+            for it in adj[node]:
+                v, w = it[0], it[1]
+                if dis + w < distTo[v]:
+                    distTo[v] = dis + w
+
+                    heapq.heappush(pq, (dis + w, v))
+
+        return distTo
+
