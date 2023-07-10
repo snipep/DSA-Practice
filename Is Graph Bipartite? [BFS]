@@ -1,0 +1,25 @@
+from collections import deque
+class Solution:
+    def check(self, src, color, grid):
+        color[src] = 0
+        q = deque([(src,-1)])
+        while q:
+            node, parent = q.popleft()
+
+            for neighbor in grid[node]:
+                if color[neighbor] == -1:
+                    color[neighbor] = 1 - color[node]
+                    q.append((neighbor, node))
+                elif color[neighbor] == color[node]:
+                    return False
+        return True
+        
+    def isBipartite(self, grid: List[List[int]]) -> bool:
+        V = len(grid)
+        color = [-1] * V
+
+        for i in range(V):
+            if color[i] == -1:
+                if not self.check(i, color, grid):
+                    return False
+        return True
