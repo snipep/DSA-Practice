@@ -1,0 +1,19 @@
+class Solution:
+    '''
+    V: nodes in graph
+    edges: adjacency list for the graph
+    S: Source
+    '''
+    def bellman_ford(self, V, edges, S):
+        dis = [int(1e8)] * V
+        dis[S] = 0
+        for i in range(V - 1):
+            for it in edges:
+                u, v, wt = it
+                if dis[u] != int(1e8) and dis[u] + wt < dis[v]:
+                    dis[v] = dis[u] + wt
+                    
+        for u, v, wt in edges:
+            if dis[u] != int(1e8) and dis[u] + wt < dis[v]:
+                return [-1]
+        return dis
