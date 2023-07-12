@@ -1,0 +1,42 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+from sys import stdin
+
+def maximumNonAdjacentSum(nums):
+    n = len(nums)
+# Memoization dictionary to store computed values
+    memo = {}  
+    
+    def a(ind):
+        if ind == 0:
+            return nums[0]
+        if ind < 0:
+            return 0
+
+# Check if the computed value already exists in the memoization dictionary
+        if ind in memo:
+            return memo[ind]
+
+        pick = nums[ind] + a(ind - 2)
+        notpick = a(ind - 1)
+        
+# Store the computed value in the memoization dictionary
+        memo[ind] = max(pick, notpick)
+        
+        return memo[ind]
+
+    return a(n - 1)
+
+# Main.
+t = int(stdin.readline().rstrip())
+
+while t > 0:
+    
+    n = int(stdin.readline().rstrip())
+    arr = list(map(int, stdin.readline().rstrip().split(" ")))
+    print(maximumNonAdjacentSum(arr))
+    
+    t -= 1
