@@ -1,0 +1,17 @@
+from sys import stdin
+#Using tabulation and space optimisation
+T.C ==>> O(N)
+S.C ==>> O(1)
+def maxMoneyLooted(houses, n) :
+    prev = houses[0]
+    prev2 = 0
+    for i in range(1,n):
+        take = houses[i]
+        if i > 1:
+            take += prev2
+        nottake = prev
+        
+        curi = max(take, nottake)
+        prev2 = prev
+        prev = curi
+    return prev
