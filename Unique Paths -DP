@@ -1,0 +1,53 @@
+# DP using memoization 
+# T.C ==>> O(M*N)
+# S.C ==>> O(M*N) + O(N)
+def recurr(m, n, dp):
+    if m == 0 and n == 0:
+        return 1
+    if m < 0 or n < 0:
+        return 0
+    if dp[m][n] != -1:
+        return dp[m][n]
+
+    up = recurr(m-1, n, dp)
+    left = recurr(m, n-1, dp)
+    dp[m][n] = up + left  
+    return dp[m][n]
+
+def uniquePaths(m, n):
+    dp = [[-1] * n for _ in range(m)]
+    return recurr(m-1, n-1, dp)
+
+# DP using Tabulation without space optimisation
+def uniquePaths(m, n):
+	dp = [[0]*n for _ in range(m)]
+	for i in range(m):
+		for j in range(n):
+			if i== 0 and j == 0:
+				dp[i][j] = 1
+			else:
+				up,left = 0,0
+				if i > 0:
+					up = dp[i-1][j]
+				if j > 0:
+					left = dp[i][j-1]
+				dp[i][j] = up + left  
+	return dp[m-1][n-1]
+	
+# DP using Tabulation with space optimisation
+def uniquePaths(m, n):
+	dp = [0]*n
+	for i in range(m):
+		curr = [0]*n
+		for j in range(n):
+			if i== 0 and j == 0:
+				curr[j] = 1
+			else:
+				up,left = 0,0
+				if i > 0:
+					up = prev[j]
+				if j > 0:
+					left = curr[j-1]
+				curr[j] = up + left  
+		prev = curr
+	return prev[n-1]
