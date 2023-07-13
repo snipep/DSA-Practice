@@ -51,6 +51,20 @@ def knapsack(n, wt, val, bag):
         prev = curr[:]
     return prev[bag]
       
+# DP using Tabulation with space optimisation
+def knapsack(n, wt, val, bag):
+    prev = [0]*(bag+1)
+    for i in range(wt[0],bag+1):
+        prev[i] = val[0]
+    for ind in range(1, n):
+        for W in range(bag,-1,-1):
+            nottake = prev[W]
+            take = 0
+            if wt[ind] <= W:
+                take = val[ind] + prev[W - wt[ind]]
+            prev[W] = max(take, nottake)
+    return prev[bag]
+      
 # Main.
 t = int(input())
 while (t > 0):
