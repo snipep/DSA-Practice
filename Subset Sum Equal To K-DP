@@ -1,0 +1,53 @@
+# DP using Memoriation
+def f(ind, target, arr,dp):
+    if target == 0:
+        return True
+    if ind < 0 or target < 0:
+        return False
+    if ind == 0:
+        return arr[0] == target
+    if dp[ind][target] != -1:
+        return dp[ind][target]
+    nottake = f(ind-1, target, arr, dp)
+    take = False
+    if arr[ind] <= target:
+        take = f(ind-1, target - arr[ind], arr,dp)
+    dp[ind][target] = nottake or take
+    return dp[ind][target]
+
+def subsetSumToK(n, k, arr):
+    dp = [[-1]*(k+1) for _ in range(n+1)]
+    return f(n-1, k, arr,dp)
+
+# DP using Tabulariation without space optimisation
+def subsetSumToK(n, k, arr):
+    dp = [[False]*(k+1) for _ in range(n+1)]
+    for i in range(n+1):
+        dp[i][0] = True
+    for ind in range(1, n+1):
+        for target in range(1, k+1):
+            nottake = dp[ind-1][target]
+            take = False
+            if arr[ind-1] <= target:
+                take = dp[ind - 1][target - arr[ind -1 ]]
+           
+            dp[ind][target] = nottake or take
+
+    return dp[n][k]
+
+# DP using Tabulariation with space optimisation
+def subsetSumToK(n, k, arr):
+    curr, prev = [False] * (k + 1), [False] * (k + 1)
+    curr[0] = prev[0] = True
+    for ind in range(1, n):
+        for target in range(1, k + 1):
+            nottake = prev[target]
+            take = False
+            if arr[ind] <= target:
+                take = prev[target - arr[ind]]
+           
+            curr[target] = nottake or take
+        prev = curr[:]
+    return prev[k]
+
+
