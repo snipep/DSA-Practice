@@ -1,0 +1,39 @@
+class Solution:
+# DP using Memoization
+    def fx(self, i,j, grid, dp):
+        if i == 0 and j == 0:
+            return grid[0][0]
+        if i < 0 or j < 0:
+            return float('inf')
+        if dp[i][j] != -1:
+            return dp[i][j]
+        up = grid[i][j] + self.fx(i-1,j, grid, dp)
+        left = grid[i][j] + self.fx(i,j-1, grid, dp)
+        dp[i][j] = min(up,left)
+        return dp[i][j]
+
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n  = len(grid[0]) 
+        dp = [[-1]*n for _ in range(m)]
+        return self.fx(m-1,n-1, grid,dp)
+
+# DP using Tabularisation without space optimisation
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n  = len(grid[0]) 
+        dp = [[0]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i==0 and j ==0:
+                    dp[i][j] = grid[i][j]
+                else:
+                    up,left = grid[i][j],grid[i][j]
+                    if i > 0:up += dp[i-1][j]
+                    else:up += 1e9
+
+                    if j > 0:left += dp[i][j-1]
+                    else:left += 1e9
+
+                    dp[i][j] = min(up,left)
+        return dp[m-1][n-1]
