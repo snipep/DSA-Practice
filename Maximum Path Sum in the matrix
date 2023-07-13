@@ -1,0 +1,77 @@
+from sys import stdin, setrecursionlimit
+setrecursionlimit(10**7)
+# DP using Memoization
+def f(i, j, grid, dp):
+    n = len(grid)
+    m = len(grid[0])
+    maxi = 0
+    if j <0 or j >=m:
+        return -1e9
+    if i == 0:
+        return grid[0][j]
+    if dp[i][j] != -1:
+        return dp[i][j]
+    st= grid[i][j] + f(i-1, j, grid, dp)
+    left_di = grid[i][j] + f(i-1, j-1, grid, dp)
+    right_di = grid[i][j] + f(i-1, j+1, grid, dp)
+    dp[i][j] = max(st, left_di, right_di)
+    return dp[i][j]
+
+def getMaxPathSum(grid):
+    n = len(grid)
+    m = len(grid[0])
+    dp = [[-1]*m for _ in range(n)]
+    maxi = -1e9
+    for i in range(m):
+        maxi = max(maxi, f(n-1,i, grid, dp))
+    return maxi
+
+# DP using Tabulariation without space optimisation
+def getMaxPathSum(grid):
+    n = len(grid)
+    m = len(grid[0])
+    dp = [[-1]*m for _ in range(n)]
+    for j in range (m):
+        dp[0][j] = grid[0][j]
+    for i in range(1,n):
+        for j in range(m):
+                st= grid[i][j] + dp[i-1][j]
+                left_di = grid[i][j]
+                if j-1 >= 0:left_di += dp[i-1][j-1]
+                else:left_di += -1e9
+                right_di = grid[i][j]
+                if j+1 < m:right_di += dp[i-1][j+1]
+                else:right_di += -1e9
+                dp[i][j] = max(st, max(left_di, right_di))
+
+    maxi = -1e9
+    for j in range(m):
+        maxi = max(maxi, dp[n-1][j])
+    return maxi
+
+
+#DP using Tabulariation without space optimisation
+def getMaxPathSum(grid):
+    n = len(grid)
+    m = len(grid[0])
+    prev = [0]*m
+    curr = [0]*m
+    for j in range(m):
+        prev[j] = grid[0][j]
+
+    for i in range(1,n):
+        for j in range(m):
+                st= grid[i][j] + prev[j]
+                left_di = grid[i][j]
+                if j-1 >= 0:left_di += prev[j-1]
+                else:left_di += -1e9
+                right_di = grid[i][j]
+                if j+1 < m:right_di += prev[j+1]
+                else:right_di += -1e9
+                curr[j] = max(st, max(left_di, right_di))
+        prev = curr[:]
+
+    maxi = -1e9
+    for j in range(m):
+        maxi = max(maxi, prev[j])
+    return maxi
