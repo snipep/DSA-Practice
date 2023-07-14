@@ -1,0 +1,61 @@
+# DP using recursion + memoization
+def f(ind, n, price,dp):
+    if ind == 0:
+        return n * price[0]
+    if dp[ind][n] != -1:
+        return dp[ind][n]
+    nottake = f(ind - 1, n, price,dp)
+    take = -1e8
+    rodlen = ind + 1
+    if rodlen <= n:
+        take = price[ind] + f(ind, n - rodlen, price, dp)
+    dp[ind][n] = max(take, nottake)
+    return dp[ind][n]
+
+def cutRod(price, n):
+    dp = [[-1]*(n+1) for _ in range(n+1)]
+    return f(n - 1, n, price, dp)
+
+
+# DP using tabulation without space optimisation
+def cutRod(price, n):
+    dp = [[0]*(n+1) for _ in range(n+1)]
+    for n in range(n+1):
+        dp[0][n] = n * price[0]
+    
+    for ind in range(1,n):
+        for n in range(n+1):
+            nottake = dp[ind-1][n]
+            take = -1e8
+            rodlen = ind + 1
+            if rodlen <= n:
+                take = price[ind] + dp[ind][n - rodlen]
+            dp[ind][n] = max(take, nottake)  
+    return dp[n - 1][n]
+    
+    
+# DP using tabulation with space optimisation
+def cutRod(price, n):
+    prev = [0]*(n+1)
+    curr = [0]*(n+1)
+    for n in range(n+1):
+        prev[n] = n * price[0]
+    
+    for ind in range(1,n):
+        for n in range(n+1):
+            nottake = prev[n]
+            take = -1e8
+            rodlen = ind + 1
+            if rodlen <= n:
+                take = price[ind] + curr[n - rodlen]
+            curr[n] = max(take, nottake)  
+        prev = curr[:]
+    return prev[n]
+
+
+
+
+
+
+
+
