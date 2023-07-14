@@ -1,0 +1,63 @@
+import sys
+# DP using recursion + memoization
+def f(ind1, s, ind2, t, dp):
+	if ind1 == 0 or ind2 == 0:
+		return 0
+	if dp[ind1][ind2] != -1:
+		return dp[ind1][ind2]
+	if s[ind1 - 1] == t[ind2 - 1]:
+		dp[ind1][ind2] = 1 + f(ind1 - 1, s, ind2 - 1, t, dp)
+		return dp[ind1][ind2]
+	dp[ind1][ind2] = max(f(ind1 - 1, s, ind2, t, dp), f(ind1, s, ind2 - 1, t, dp))
+	return dp[ind1][ind2]
+
+
+def lcs(s, t) :
+	ind1 = len(s)
+	ind2 = len(t)
+	dp = [[-1]*(ind2+1) for i in range(ind1+1)]
+	return f(ind1, s, ind2, t, dp)
+
+
+# DP using tabulation without space optimisation
+def lcs(s, t) :
+	len1 = len(s)
+	len2 = len(t)
+	dp = [[-1]*(len2+1) for i in range(len1+1)]
+	for i in range(len1 + 1):
+		dp[i][0] = 0
+	for j in range(len2 + 1):
+		dp[0][j] = 0
+
+	for ind1 in range(1, len1+1):
+		for ind2 in range(1, len2+1):
+			if s[ind1 - 1] == t[ind2 - 1]:
+				dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1]
+
+			else:
+				dp[ind1][ind2] = max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1])
+
+	return dp[len1][len2]
+
+
+# DP using tabulation with space optimisation
+def lcs(s, t) :
+	len1 = len(s)
+	len2 = len(t)
+	prev = [0]*(len2+1)
+	curr = [0]*(len2+1)
+
+	for j in range(len2 + 1):
+		prev[j] = 0
+
+	for ind1 in range(1, len1+1):
+		for ind2 in range(1, len2+1):
+			if s[ind1 - 1] == t[ind2 - 1]:
+				curr[ind2] = 1 + prev[ind2 - 1]
+
+			else:
+				curr[ind2] = max(prev[ind2], curr[ind2 - 1])
+		prev = curr[:]
+	return prev[len2]
+
+
