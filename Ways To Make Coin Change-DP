@@ -1,0 +1,55 @@
+# DP using recursion + Memoization
+def t(ind, T, a, dp):
+    if ind == 0:
+        return T % a[ind] == 0
+    if dp[ind][T] != -1:
+        return dp[ind][T]
+    nottake = t(ind - 1, T, a, dp)
+    take = 0 
+    if a[ind] <= T:
+        take = t(ind, T - a[ind], a, dp)
+    dp[ind][T] = take + nottake
+    return dp[ind][T]
+
+def countWaysToMakeChange(denominations, value):
+    n = len(denominations)
+    dp = [[-1] * (value + 1) for _ in range(n+1)]
+    return t(n - 1, value, denominations, dp)
+
+
+# DP using tabularisation without space optimisation
+def countWaysToMakeChange(denominations, value):
+    n = len(denominations)
+    dp = [[0] * (value + 1) for _ in range(n)]
+
+    for T in range(value+ 1):
+        dp[0][T] = (T % denominations[0] == 0)
+    for ind in range(1,n):
+        for T in range(value+1):
+            nottake = dp[ind-1][T]
+            take = 0 
+            if denominations[ind] <= T:
+                take = dp[ind][T - denominations[ind]]
+            dp[ind][T] = take + nottake
+
+    return dp[n-1][T]
+
+
+# DP using tabularisation with space optimisation
+def countWaysToMakeChange(denominations, value):
+    n = len(denominations)
+    prev = [0]*(value + 1)
+    curr = [0]*(value + 1)
+
+    for T in range(value+ 1):
+        prev[T] = (T % denominations[0] == 0)
+    for ind in range(1,n):
+        for T in range(value+1):
+            nottake = prev[T]
+            take = 0 
+            if denominations[ind] <= T:
+                take = curr[T - denominations[ind]]
+            curr[T] = take + nottake
+        prev = curr[:]
+    return prev[T]
+
