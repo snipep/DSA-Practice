@@ -1,0 +1,18 @@
+class Solution:
+    def lis(self, arr, start, dp, N):
+        if dp[start] != -1:
+            return dp[start]
+
+        ret = 0
+        for nxt in range(start+1, N):
+            if arr[start] < arr[nxt]:
+                ret = max(ret, self.lis(arr, nxt, dp, N) + 1)
+
+        dp[start] = ret
+        return dp[start]
+
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        nums = [float("-inf")] + nums
+        n = len(nums)
+        dp = [-1] * n
+        return self.lis(nums, 0, dp,n)
