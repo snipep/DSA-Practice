@@ -1,0 +1,67 @@
+
+# DP using memoization + recursion
+def f(ind, buy, values, dp):
+    if ind == len(values):
+        return 0
+    if dp[ind][buy] != -1:
+        return dp[ind][buy]
+    profit = 0
+    if buy:
+        profit = max(-values[ind] + f(ind + 1, 0, values, dp), f(ind + 1, 1, values, dp))
+    else:
+        profit = max(values[ind] + f(ind + 1, 1, values, dp), f(ind + 1, 0, values, dp))
+    dp[ind][buy] = profit
+    return dp[ind][buy]
+
+def getMaximumProfit(values, n):
+    dp = [[-1] * 2 for _ in range(n + 1)]  
+    return f(0, 1, values, dp)
+
+
+
+# DP using tabulation without space optimization
+def getMaximumProfit(values, n):
+    dp = [[0] * 2 for _ in range(n + 1)]  
+    dp[n][0] = dp[n][1] = 0
+
+    for ind in range(n-1,-1,-1):
+        for buy in range(0,2):
+            profit = 0
+            if buy:
+                profit= max( -values[ind] + dp[ind + 1][0], dp[ind + 1][1] )
+            else:
+                profit = max( values[ind] + dp[ind+1][1], dp[ind+1][0] )
+            dp[ind][buy] = profit
+    return dp[0][1]
+
+
+
+# DP using tabulation with space optimization
+def getMaximumProfit(values, n):
+    prev = [0]*2
+    for ind in range(n-1,-1,-1):
+        for buy in range(0,2):
+            profit = 0
+            if buy:
+                profit= max( -values[ind] + prev[0], prev[1] )
+            else:
+                profit = max( values[ind] + prev[1], prev[0] )
+            prev[buy] = profit
+    return prev[1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
