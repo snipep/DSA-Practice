@@ -1,0 +1,25 @@
+# DP using tabulation With Different approach used to trace back the LIS
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [1]*n
+        maxi = 0
+        lastind = 0
+        hash []*n
+        for i in range(n):
+            hash[i] = i
+            for j in range(0,i):
+                if nums[i] > nums[j] and 1 + dp[j] > dp[i]:
+                    dp[i] += 1 + dp[j]
+                    has[i] = j
+            if dp[i] > maxi:
+                maxi = dp[i]
+                lastind = i
+
+        lis = []
+        lis[0] = nums[lastind]
+        ind = 1
+        while hash[lastind] != lastind:
+            lastind = hash[lastind]
+            lis.append(nums[lastind])
+            ind += 1
+        return a[::-1]
