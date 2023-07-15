@@ -1,0 +1,15 @@
+import bisect
+# Solving using binary search 
+T.C ==>> O(N * LogN)
+S.C ==>> O(N)
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        temp = []
+        temp.append(nums[0])
+        for i in range(n):
+            if nums[i] > temp[-1]:
+                temp.append(nums[i])
+            else:
+                ind = bisect.bisect_left(temp, nums[i])
+                temp[ind] = nums[i]
+        return len(temp)
