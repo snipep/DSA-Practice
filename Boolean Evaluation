@@ -1,0 +1,53 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+mod = 1000000007 
+
+# DP using recursion + memoization 
+def f(i, j, istrue, a, dp):
+	# 2 base cases
+	if i > j:
+		return 0
+	if i == j:
+		if istrue:
+			return a[i] == 'T'
+		else:
+			return a[i] == 'F'
+
+	if dp[i][j][istrue] != -1:
+		return dp[i][j][istrue]
+
+	ways = 0
+	for ind in range(i+1, j+1, +2):
+		LT = f(i, ind-1, 1, a, dp)
+		LF = f(i, ind-1, 0, a, dp)
+		RT = f(ind+1, j, 1, a, dp)
+		RF = f(ind+1, j, 0, a, dp)
+
+		if a[ind] == '&':
+			if istrue:
+				ways = (ways + (LT * RT))% mod
+			else:
+				ways = (ways + (LF * RF) + (LT * RF) + (RT * LF))% mod
+
+		elif a[ind] == '|':
+			if istrue:
+				ways = (ways + (LT * RT) + (LT * RF) + (RT * LF))% mod
+			else:
+				ways = (ways + (LF * RF))% mod
+
+		else:
+			if istrue:
+				ways = (ways + (LT * RF) + (RT * LF))% mod
+			else:
+				ways = (ways + (LT * RT) + (RF * LF))% mod
+
+	dp[i][j][istrue] = ways
+	return dp[i][j][istrue]
+
+
+def evaluateExp(exp):
+	n = len(exp)
+	dp = [[[-1]*2 for _ in range(n+1)] for _ in range(n+1)]
+	return f(0, n-1, 1, exp, dp)
