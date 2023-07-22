@@ -1,0 +1,25 @@
+from typing import List
+class Solution:
+    def par(self, nums, low, high):
+        pivot = nums[low]
+        i, j = low, high
+        while i < j:
+            while (nums[i] <=  pivot and i <= high - 1):
+                i += 1
+            while (pivot < nums[j] and j >= low + 1):
+                j -= 1
+            if i < j:
+                nums[j], nums[i] = nums[i], nums[j]
+
+        nums[low], nums[j] = nums[j], nums[low]
+        return j
+    
+    def qs(self, nums, low, high):
+        if low <= high:
+            partition = self.par(nums, low, high)
+            self.qs(nums, low, partition - 1)
+            self.qs(nums, partition + 1, high)
+
+    def sortArray(self, nums: List[int]) -> List[int]:
+        self.qs(nums, 0, len(nums) - 1)
+        return nums 
