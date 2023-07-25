@@ -6,7 +6,7 @@ class Solution:
         len1 = 0
         l , r = 0,0
         check = {}
-        for i in range(len(s)):
+        while r < len(s):
             if s[r] not in check:
                 check[s[r]] = r
                 r += 1
