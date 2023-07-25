@@ -1,0 +1,20 @@
+
+def getLongestSubarray(arr: [int]) -> int:
+    n = len(arr)
+    ds = {}
+    sum1 = 0
+    res = 0
+    for i in range(n):
+        sum1 += arr[i]
+    
+        if sum1 == 0:
+            res = max(res, i+1)
+        
+        if sum1 in ds:
+            length = i - ds[sum1]
+            res = max(res, length)
+            
+        if sum1 not in ds:
+            ds[sum1] = i
+            
+    return res
