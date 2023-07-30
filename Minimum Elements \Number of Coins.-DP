@@ -1,0 +1,51 @@
+# Dp using recursion + memoization
+def t(nums, ind, T, dp):
+    if ind == 0:
+        if T%nums[ind] == 0:
+            return T//nums[ind]
+        else:
+            return int(1e9)
+    if dp[ind][T] != -1:
+        return dp[ind][T]
+
+    nottake = 0 + t(nums, ind -1, T, dp)
+    take = int(1e9)
+    if nums[ind] <= T:
+        take = 1 + t(nums, ind, T - nums[ind], dp)
+    dp[ind][T] = min(take, nottake)
+    return dp[ind][T]
+
+def minimumElements(num: List[int], x: int) -> int:
+    n = len(num)
+    dp = [[-1 for j in range(x+1)] for i in range(n)]
+    res = t(num, n-1, x, dp)
+    if res >= 1e9:
+        return -1
+    else:
+        return res
+        
+# DP using tabulation       
+def minimumElements(nums: List[int], T: int) -> int:
+    n = len(nums)
+    dp = [[0 for _ in range(T+1)] for _ in range(n)]
+
+    for i in range(T+1):
+        if i%nums[0] == 0:
+            dp[0][i] = i//nums[0]
+        else:
+            dp[0][i] = int(1e9)
+
+    for ind in range(1,n):
+        for target in range(T + 1):
+            nottake = 0 + dp[ind-1][target]
+            take = int(1e9)
+            if nums[ind] <= target:
+                take = 1 + dp[ind][target - nums[ind]]
+            dp[ind][target] = min(take, nottake)
+
+    ans = dp[n - 1][T]
+    if ans >= int(1e9):
+        return -1
+    return ans
+
+ 
