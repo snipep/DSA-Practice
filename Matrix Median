@@ -23,3 +23,31 @@ def getMedian(matrix):
         else:
             high = mid - 1
     return int(low)
+
+
+
+
+class Solution:
+    def countnumber(self, row, mid):
+        low, high = 0, len(row) - 1
+        while low <= high:
+            mid2 = (low + high) // 2
+            if row[mid2] <= mid:
+                low = mid2 + 1
+            else:
+                high = mid2 - 1
+        return low
+        
+    def median(self, A, n, m):
+        low, high = 0, int(1e9)
+        while low <= high:
+            mid = (low + high)//2
+            count = 0
+            for i in range(n):
+                count += self.countnumber(A[i], mid)
+            
+            if count <= (m * n) //2:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return low     
