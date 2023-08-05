@@ -1,0 +1,22 @@
+class Solution:
+    def solve(self, i, j, m, n, vis, res, move, di, dj):
+        if i == n-1 and j == n-1:
+            res.append(move)
+            return
+        dirr = "DLRU"
+        for ind in range(4):
+            nexti = di[ind] + i
+            nextj = dj[ind] + j
+            if 0 <= nexti < n and 0 <= nextj < n and vis[nexti][nextj] == 0 and matrix[nexti][nextj]:
+                vis[i][j] = 1
+                self.solve(nexti, nextj, m, n, vis, res, move + dirr[ind], di, dj)
+                vis[i][j] = 0
+                
+    def findPath(self, m, n):
+        res = []
+        vis = [[0 for _ in range(n)] for _ in range(n)]
+        di = [+1, 0, 0, -1]
+        dj = [0, -1, 1, 0]
+        if m[0][0] == 1:
+            self.solve(0, 0, m, n, vis, res, "", di, dj)
+        return res 
