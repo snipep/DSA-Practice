@@ -1,0 +1,17 @@
+class Solution:
+    def solve(self, start, s, dictionary, string, ans, n):
+        if start == n:
+            ans.append(" ".join(string))
+            return
+        
+        for end in range(start + 1, n + 1):
+            word = s[start:end]
+            if word in dictionary:
+                self.solve(end, s, dictionary, string + [word], ans, n)
+
+            
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        ans = []
+        n = len(s)
+        self.solve(0, s, wordDict, [],  ans, n)
+        return ans
