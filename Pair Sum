@@ -1,0 +1,16 @@
+def pairSum(arr, k):
+    arr.sort()
+    n = len(arr)
+    unordered_map = {}
+    res = []
+    for i in range(n):
+        if k-arr[i] in unordered_map:
+            count = unordered_map[k - arr[i]]
+            res.extend([(k - arr[i], arr[i])] * count) 
+        if arr[i] in unordered_map:
+            unordered_map[arr[i]] += 1
+        else:
+            unordered_map[arr[i]] = 1
+    sorted_pairs = sorted(res, key=lambda x: (x[0], x[1]))
+    return sorted_pairs
+
