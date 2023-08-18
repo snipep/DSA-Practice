@@ -1,0 +1,14 @@
+def insertstack(stack, val):
+    if not stack or val > stack[-1]:
+        stack.append(val)
+    else:
+        temp = stack.pop()
+        insertstack(stack,val)
+        stack.append(temp)
+        
+def sortStack(stack):
+    if stack:
+        temp = stack.pop()
+        sortStack(stack)
+        insertstack(stack,temp)
+    return stack
