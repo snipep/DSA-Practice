@@ -1,0 +1,14 @@
+def findUnique(arr, n) :
+    ds = {}
+    if n == 1:
+        return arr[0]
+    for i in range(n):
+        if arr[i] not in ds:
+            ds[arr[i]] = 1
+        else:
+            ds[arr[i]] += 1
+    
+    for i in range(n):
+        if ds[arr[i]] == 1:
+            return arr[i]
+    return -1
