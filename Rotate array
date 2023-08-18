@@ -1,11 +1,7 @@
-
-
 def rotateArray(arr, k):
     n = len(arr)
-    if k == 0 or k == n:
-        return arr    
-    res = arr[k:] + arr[:k]
-    return res
+    k = k % n  
+    return arr[k:] + arr[:k]
 
 
 
@@ -15,5 +11,4 @@ arr = [int(i) for i in input().split()]
 k = int(input())
 rotated_arr = rotateArray(arr, k)
 
-for element in rotated_arr:
-    print(element, end=" ")
+print(*rotated_arr) 
