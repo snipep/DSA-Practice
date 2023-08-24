@@ -1,0 +1,14 @@
+def switchingSubarray(arr, n): 
+    if len(arr) < 3:
+        return len(arr)
+    max_length = 2
+    current_length = 2
+    
+    for i in range(2, n):
+        if arr[i] == arr[i - 2]: 
+            current_length += 1
+        else:
+            current_length = 2
+        max_length = max(max_length, current_length)
+    
+    return max_length
