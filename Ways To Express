@@ -1,0 +1,35 @@
+# T.C ==>> O(N^2)
+# S.C ==>> O(1)
+def CountSumConsecutiveNums(N):
+    count = 0
+    for start in range(1, N//2 + 2):
+        current_sum = 0
+        for num in range(start, N//2 + 2):
+            current_sum += num
+            if current_sum == N:
+                count += 1
+                break
+            elif current_sum > N:
+                break
+                
+    return count
+
+# T.C ==>> O(N)
+# S.C ==>> O(1)
+def CountSumConsecutiveNums(N):
+    count = 0
+    start = 1
+    end = 1
+    while start <= ( N // 2 )+ 1:
+        current_sum = (end * (end + 1) - start * (start - 1)) // 2
+        
+        if current_sum < N:
+            end += 1
+        elif current_sum > N:
+            start += 1
+        else:
+            count += 1
+            start += 1
+        
+    return count
+    
