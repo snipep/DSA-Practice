@@ -1,0 +1,22 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+def complexMultiplication(num1, num2):
+    num1 = num1.replace("i", "")  # Remove 'i' from the input strings
+    num2 = num2.replace("i", "")
+    
+    parts1 = num1.split("+")  # Split into real and imaginary parts
+    parts2 = num2.split("+")
+    
+    a = int(parts1[0])
+    b = int(parts1[1] if len(parts1) > 1 else 0)  # Default to 0 if no imaginary part
+    c = int(parts2[0])
+    d = int(parts2[1] if len(parts2) > 1 else 0)
+    
+    real_part = (a * c) - (b * d)
+    imaginary_part = (a * d + b * c)
+    
+    ans = str(real_part) + "+" + str(imaginary_part) + "i"
+    return ans
