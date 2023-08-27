@@ -1,0 +1,32 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+def solve(i, arr, n, k, dp):
+    if i == n-1:
+        return 0
+    if dp[i] != -1:
+        return dp[i]
+    
+    cost = float('inf')
+    for j in range(i+1, min(i+k+1, n)):
+        temp = abs(arr[i] - arr[j]) + solve(j, arr, n, k, dp)
+        cost = min(cost, temp)
+    
+    dp[i] = cost
+    return cost
+
+def minimumCost(arr, n, k):
+    dp = [-1] * n
+    return solve(0, arr, n, k, dp)
+
+
+t = int(input())
+
+for i in range(t):
+    n,k = [int(i) for i in input().strip().split()]
+    arr = [int(i) for i in input().strip().split()]
+
+    ans = minimumCost(arr, n, k)
+    print(ans)
