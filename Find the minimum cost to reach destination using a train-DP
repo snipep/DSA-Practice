@@ -1,0 +1,9 @@
+def minCost(graph, n):
+    dp = [float('inf')] * n
+    dp[0] = 0
+    
+    for i in range(n):
+        for j in range(i):
+            dp[i] = min(dp[i], dp[j] + graph[j][i])
+    
+    return dp[n - 1]
