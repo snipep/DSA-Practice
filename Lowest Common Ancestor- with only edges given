@@ -1,0 +1,38 @@
+from typing import *
+
+def dfs(node, parent, depth, parent_list, depth_list, graph):
+    parent_list[node] = parent
+    depth_list[node] = depth
+    for neighbor in graph[node]:
+        if neighbor != parent:
+            dfs(neighbor, node, depth + 1, parent_list, depth_list, graph)
+
+
+def lca(n: int, edge: List[List[int]], query: List[List[int]]) -> List[int]:
+    graph = [[] for _ in range(n+1)]
+    for u, v in edge:
+        graph[u].append(v)
+        graph[v].append(u)
+
+    parent_list = [0] * (n + 1)
+    depth_list = [0] * (n + 1)
+    
+    dfs(1, -1, 0, parent_list, depth_list, graph)
+
+    def find_lca(u, v):
+        while depth_list[u] < depth_list[v]:
+            v = parent_list[v]
+        while depth_list[u] > depth_list[v]:
+            u = parent_list[u]
+        while u != v:
+            v = parent_list[v]
+            u = parent_list[u]
+            
+        return u
+
+    results = []
+    for u, v in query:
+        lca_result = find_lca(u, v)
+        results.append(lca_result)
+    
+    return results
