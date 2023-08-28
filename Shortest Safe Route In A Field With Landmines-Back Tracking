@@ -1,0 +1,69 @@
+'''
+    Time complexity: O(3 ^ (M * N))
+    Space complexity: O(M * N)
+'''
+from sys import maxsize
+
+def isValid(i, j, m, n):
+    if (i < 0 or j < 0 or i >= m or j >= n):
+        return False
+    return True
+
+def markUnsafeCells(field, direction):
+    m = len(field)
+    n = len(field[0])
+
+    for i in range(m):
+        for j in range(n):
+            if (field[i][j] == 0):
+                for k in range(4):
+                    x = i + direction[k][0]
+                    y = j + direction[k][1]
+                    if (isValid(x, y, m, n) and field[x][y] == 1):
+                        field[x][y] = -1
+
+    for i in range(m):
+        for j in range(n):
+            if (field[i][j] == -1):
+                field[i][j] = 0
+
+def shortestPathHelper(field, visited, i, j, minLength, curLenght, direction):
+    m = len(field)
+    n = len(field[0])
+    if (j == n-1):
+        minLength = min(minLength, curLenght)
+        return visited, minLength
+
+    if(curLenght >= minLength):
+        return visited, minLength
+
+    visited[i][j] = True
+    for k in range(4):
+        x = i + direction[k][0]
+        y = j + direction[k][1]
+        if (isValid(x, y, m, n) and field[x][y] == 1 and visited[x][y] == False):
+            visited, minLength = shortestPathHelper(field, visited, x, y, minLength, curLenght + 1, direction)
+    
+    visited[i][j] = False
+    return visited, minLength
+
+def shortestPath(field):
+    m = len(field)
+    n = len(field[0])
+    minLength = maxsize
+    direction = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+    markUnsafeCells(field, direction)
+    for i in range(m):
+        if (field[i][0] == 1):
+            visited = [[False for i in range(n)] for j in range(m)]
+            visited, minLength = shortestPathHelper(field, visited, i, 0, minLength, 0, direction)
+
+            if (minLength == n-1):
+                break
+
+    if (minLength == maxsize):
+        return -1
+    return minLength
+
+
+
