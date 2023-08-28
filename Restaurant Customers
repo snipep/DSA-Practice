@@ -1,0 +1,24 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+def maxCustomers(arrival, leaving):
+    arrival.sort()
+    leaving.sort()
+
+    max_customer = 0
+    curr_customer = 0
+    arrivalIndex = 0
+    leavingIndex = 0
+
+    while arrivalIndex < len(arrival) and leavingIndex < len(leaving):
+        if arrival[arrivalIndex] < leaving[leavingIndex]:
+            curr_customer += 1
+            arrivalIndex += 1
+        else:
+            curr_customer -= 1
+            leavingIndex +=1
+        max_customer = max(max_customer, curr_customer)
+    
+    return max_customer
