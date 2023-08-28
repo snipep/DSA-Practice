@@ -1,0 +1,32 @@
+# Recurrsion
+def waysToBreak(n, k):
+    def countWays(x, k, num):
+        if x == 0:
+            return 1
+        if x < 0 or num <= 0:
+            return 0
+        return countWays(x - pow(num, k), k, num - 1) + countWays(x, k, num - 1)
+
+    return countWays(n, k, int(pow(n, 1/k)))
+
+# DP using Recurrsion
+def waysToBreak(n, k):
+    memo = {}  # Memoization dictionary
+
+    def countWays(x, k, num):
+        if (x, num) in memo:
+            return memo[(x, num)]
+
+        if x == 0:
+            return 1
+        if x < 0 or num <= 0:
+            return 0
+        
+        # Calculate and memoize the result
+        memo[(x, num)] = countWays(x - pow(num, k), k, num - 1) + countWays(x, k, num - 1)
+        return memo[(x, num)]
+
+    return countWays(n, k, int(pow(n, 1/k)))
+
+
+
