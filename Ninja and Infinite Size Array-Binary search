@@ -1,0 +1,39 @@
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+# Following is the InfinteSizeArray class Structure:
+class InfinteSizeArray:
+    def __init__(self, arr):
+        self._size = len(arr)
+        self._arr = arr
+
+    def readValueAtIndex(self, index):
+        if (index >= self._size):
+            return 1000000007
+        else:
+            return self._arr[index]
+
+def ninjaAndInfiniteSizeArray(obj, target):
+    low, high = 0, 1
+    
+    # Binary search to find the high index
+    while obj.readValueAtIndex(high) < target:
+        low = high
+        high = high * 2
+    
+    # Binary search in the range [low, high] to find the target
+    while low <= high:
+        mid = low + (high - low) // 2
+        value = obj.readValueAtIndex(mid)
+        
+        if value == target:
+            return mid
+        elif value < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    
+    return -1
+    
