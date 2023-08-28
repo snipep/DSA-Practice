@@ -1,0 +1,73 @@
+import math 
+
+'''
+   //Brute Force Approach//
+
+   Time Complexity = O(N ^ 2)
+   Space Complexity = O(1)
+'''
+def minimumOperation(arr, n):
+    # Variable to store maximum frequency.
+    maxFreq = 0
+    # For each element.
+    for i in range(n):
+        freq = 0
+        # Calculate its Frequency.
+        for j in range(0, n):
+            if arr[j] == arr[i]:
+                freq += 1
+        maxFreq = max(maxFreq, freq)
+    return n - maxFreq
+
+
+"""
+   // Better approach: Sort the Array
+
+   Time Complexity: O(N * log(N))
+   Space Complexity: O(1)
+"""
+
+def minimumOperation(arr, n):
+    arr.sort()
+    # Variable to store maximum frequency.
+    maxFreq = 0
+    i = 0
+    while i < n:
+        freq = 1
+        j = i + 1
+        # Calculate the freq of current element.
+        while(j < n and arr[i] == arr[j]):
+            freq += 1
+            j += 1
+
+        maxFreq = max(maxFreq, freq)
+        i = j
+    return n - maxFreq
+
+"""
+   // Optimal Approach//
+
+   Time Complexity: O(N)
+   Space Complexity: O(N)
+"""
+
+def minimumOperation(arr, n):
+    map = {}
+    # Insert all elements in dictionary.
+    for i in arr:
+        map[i] = map.get(i, 0) + 1
+
+    # Variable to store maximum frequency.
+    maxFreq = 0
+    for i in map.keys():
+        if maxFreq < map[i]:
+            maxFreq = map[i]
+    return n - maxFreq
+
+# Main.
+t = int(input())
+while t > 0:
+    n = int(input())
+    arr = [int(i) for i in input().split()]
+    print(minimumOperation(arr,n))
+    t -= 1
