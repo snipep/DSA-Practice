@@ -1,0 +1,22 @@
+class Solution:
+    def solve(self, i, j, grid, dp):
+        if i == len(grid)-1 and j == len(grid[0]) -1:
+            return 1 if grid[i][j] == 0 else 0
+        if dp[i][j] != -1:
+            return dp[i][j]
+
+        dirr = [[0,1], [1, 0]]
+        count = 0
+        for k in range(2):
+            x, y = i + dirr[k][0] , j + dirr[k][1]
+            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == 0:
+                count += self.solve(x, y, grid, dp)
+        dp[i][j] = count
+        return dp[i][j]
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        dp = [[-1]*(len(obstacleGrid[0])) for i in range(len(obstacleGrid))]
+        if obstacleGrid[0][0] == 0:
+            return self.solve(0, 0, obstacleGrid, dp)
+        return 0
+
+
