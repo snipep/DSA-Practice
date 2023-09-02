@@ -1,0 +1,35 @@
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        if not s:
+            return ""
+        ds = {}
+        for i in s:
+            if i not in ds:
+                ds[i] = 1
+            else:
+                ds[i] += 1
+
+        char = sorted(ds.keys(), key = lambda x: -ds[x])
+
+        max_freq = ds[char[0]]
+        if max_freq > (len(s) + 1) // 2:
+            return ""
+
+        index = 0
+        result = [""]*len(s)
+
+        for ch in char:
+            while ds[ch] > 0 and index < len(s) and result[index] == "":
+                result[index] = ch
+                ds[ch] -= 1
+                index += 2
+        
+        for i in range(len(s)):
+            if result[i] == "":
+                for ch in char:
+                    if ds[ch] > 0:
+                        result[i] = ch
+                        ds[ch] -= 1
+                        break
+
+        return "".join(result)
