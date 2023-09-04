@@ -1,0 +1,19 @@
+class Solution:
+    def Find_Ways(self, ind, amount, coins, dp):
+        if amount == 0:
+            return 1
+        if ind >= len(coins):
+            return 0
+        if dp[amount][ind] != -1:
+            return dp[amount][ind]
+
+        count = 0
+        count += self.Find_Ways(ind + 1, amount, coins, dp)
+        if coins[ind] <= amount:
+            count += self.Find_Ways(ind, amount - coins[ind], coins, dp)
+        dp[amount][ind] = count
+        return dp[amount][ind]
+
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [[-1]*(len(coins)) for _ in range(amount + 1)]
+        return self.Find_Ways(0, amount, coins, dp)
