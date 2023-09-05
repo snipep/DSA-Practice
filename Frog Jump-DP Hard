@@ -1,0 +1,27 @@
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        memo = {}  # memoization dictionary
+        
+        def dfs(idx, jump):
+            if (idx, jump) in memo:
+                return memo[(idx, jump)]
+            
+            if idx == len(stones) - 1:  # reach the last stone
+                return True
+            
+            for i in range(idx + 1, len(stones)):
+                gap = stones[i] - stones[idx]
+                
+                if gap < jump - 1:
+                    continue
+                if gap > jump + 1:
+                    break
+                
+                if dfs(i, gap):
+                    memo[(idx, jump)] = True
+                    return True
+            
+            memo[(idx, jump)] = False
+            return False
+
+        return dfs(0, 0)
