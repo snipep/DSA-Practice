@@ -1,0 +1,33 @@
+# T.C ==>> O(N*M*L)
+# S.C ==>> O(N)
+# DP using recurssion
+class Solution:
+    def solve(self, i, s, dictionary, dp):
+        if i == len(s):
+            return 0
+        if dp[i] != -1:
+            return dp[i]
+        
+        dp[i] = 1 + self.solve(i+1, s, dictionary, dp)
+        for w in dictionary:
+            if s[i:i+len(w)] == w:
+                dp[i] = min(dp[i], self.solve(i+len(w), s, dictionary, dp))
+        return dp[i]
+    def minExtraChar(self, s: str, dictionary: List[str]) -> int:
+        dp = [-1] * len(s)
+        return self.solve(0, s, dictionary, dp)
+
+# DP using memoization
+class Solution:
+    def minExtraChar(self, s, dictionary):
+        dp = [0] * 51  # Initialize an array to store the minimum extra characters.
+        n = len(s)
+
+        for i in range(n - 1, -1, -1):
+            dp[i] = 1 + dp[i + 1]  # Initialize with one extra character.
+
+            for w in dictionary:
+                if i + len(w) <= n and s[i:i + len(w)] == w:
+                    dp[i] = min(dp[i], dp[i + len(w)])  # Update if a word in the dictionary is found.
+
+        return dp[0]  # Return the minimum extra characters for the entire string.
