@@ -1,0 +1,12 @@
+class Solution:
+    def isReachableAtTime(self, sx: int, sy: int, fx: int, fy: int, t: int) -> bool:
+        if sx == fx and sy == fy:
+            if t == 1:
+                return False
+            else:
+                return True
+
+        n = abs(fx - sx) 
+        m = abs(fy - sy) 
+        cornermoves = abs(m-n)
+        return min(m, n) + cornermoves <= t
