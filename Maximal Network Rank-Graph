@@ -1,15 +1,17 @@
 class Solution:
     def maximalNetworkRank(self, n, roads):
-        adj = [[] for _ in range(n)]
+        adj = [0]*n
+        graph = [[False] * n for _ in range(n)]
         for u,v in roads:
-            adj[u].append(v)
-            adj[v].append(u)
+            adj[u] += 1
+            adj[v] += 1
+            graph[u][v] = graph[v][u] = True
 
         max_rank = 0
         for i in range(n):
             for j in range(i+1, n):
-                rank = len(adj[i]) + len(adj[j])
-                if i in adj[j] or j in adj[i]:
+                rank = adj[i] + adj[j]
+                if graph[i][j]:
                     rank -= 1
                 
                 max_rank = max(rank, max_rank)
