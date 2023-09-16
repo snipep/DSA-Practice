@@ -1,0 +1,24 @@
+#T.C ==>> O(N*LogN)
+#S.C ==>> O(1)
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        n = len(nums)
+        diff = 10e8
+        res = 0
+        for i in range(n):
+            a = i+1
+            b = n-1
+            while a < b:
+                sum1 = nums[i] + nums[a] + nums[b]
+                temp_diff = abs(target - sum1)
+                if temp_diff < diff:
+                    diff = temp_diff
+                    res = sum1
+                elif sum1 == target:
+                    return target
+                elif sum1 < target:
+                    a += 1
+                else:
+                    b -= 1
+        return res
