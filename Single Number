@@ -1,0 +1,24 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        d = {}
+        for ele in nums:
+            if ele in d:
+                d[ele] = False
+            else:
+                d[ele] = True
+            
+        
+        for key in d:
+            if d[key]:
+                return key
+
+    def singleNumber(self, nums: List[int]) -> int:
+        return reduce(lambda total, el: total ^ el, nums)
+
+
+# T.C ==>> O(N)
+    def singleNumber(self, nums: List[int]) -> int:
+        result = 0
+        for num in nums:
+            result ^= num
+        return result
