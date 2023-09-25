@@ -1,0 +1,19 @@
+class Solution:
+    def isValid(self, words, s):
+      s_list = []
+      for i in range(0, len(s) - len(words[0]) + 1, len(words[0])):
+        s_list.append(s[i:i+len(words[0])])
+      
+      return sorted(words) == sorted(s_list)
+
+    def findSubstring(self, s, words):
+        n, m = len(words), len(words[0])
+        w_len = m*n
+        ans = []
+        i = 0
+        while i < len(s) - w_len + 1:
+            if self.isValid(words, s[i:i+w_len]):
+                ans.append(i)
+            i += 1
+            
+        return ans
