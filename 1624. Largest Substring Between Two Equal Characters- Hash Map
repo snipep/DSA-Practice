@@ -1,0 +1,25 @@
+class Solution:
+# using brute force
+#T.C ==>> O(N*N)
+
+    def maxLengthBetweenEqualCharacters(self, s: str) -> int:
+        ans = -1
+        for left in range(len(s)):
+            for right in range(left+1, len(s)):
+                if s[left] == s[right]:
+                    ans = max(ans, right - left - 1)
+        
+        return ans
+
+# Using hash map
+#T.C ==>> O(N)
+    def maxLengthBetweenEqualCharacters(self, s: str) -> int:
+        ans = -1
+        first_index = {}
+
+        for i in range(len(s)):
+            if s[i] in first_index:
+                ans = max(ans, i - first_index[s[i]] - 1)
+            else:
+                first_index[s[i]] = i
+        return ans
