@@ -1,0 +1,11 @@
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        ans = []
+        s1 = list(s)
+        t1 = list(t)
+        for i in t1:
+            if i not in s1:
+                ans.append(i)
+            if i in s1:
+                s1.remove(i)
+        return ans[0]
