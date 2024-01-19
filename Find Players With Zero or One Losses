@@ -1,0 +1,26 @@
+from typing import List
+
+class Solution:
+    def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
+        zeroloss, oneloss, moreloss = set(), set(), set()
+
+        for match in matches:
+            winner, losser = match[0], match[1]
+
+            # Add winner.
+            if winner not in oneloss and winner not in moreloss:
+                zeroloss.add(winner)
+
+            if losser in zeroloss:
+                zeroloss.remove(losser)
+                oneloss.add(losser)
+            elif losser in oneloss:
+                oneloss.remove(losser)
+                moreloss.add(losser)
+            elif losser in moreloss:
+                continue
+            else:
+                oneloss.add(losser)
+        
+        ans = [sorted(list(zeroloss)), sorted(list(oneloss))]
+        return ans
