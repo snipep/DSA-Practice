@@ -1,0 +1,15 @@
+class Solution:
+    def Monotone_increasing(self, nums):
+        for i in range(len(nums)-1):
+            if nums[i] > nums[i+1]:
+                return False
+        return True
+
+    def Monotone_decreasing(self, nums):
+        for i in range(len(nums)-1):
+            if nums[i] < nums[i+1]:
+                return False
+        return True
+
+    def isMonotonic(self, nums: List[int]) -> bool:
+        return self.Monotone_increasing(nums) or self.Monotone_decreasing(nums)
