@@ -1,0 +1,68 @@
+# Solution using recursion
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        def climbStairs(i):
+            if i <= 1:
+                return cost[i]
+            return cost[i] + min(climbStairs(i-1), climbStairs(i-2))
+
+        n = len(cost)
+        return min(climbStairs(n-1), climbStairs(n-2))
+
+
+# DP using memoization
+# class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        def climbStairs(i):
+            if i <= 1:
+                return cost[i]
+            dp[i] =  cost[i] + min(climbStairs(i-1), climbStairs(i-2))
+
+            return dp[i]
+
+        n = len(cost)
+        dp = [0] * (n + 1)
+        return min(climbStairs(n-1), climbStairs(n-2))
+
+
+# DP using tabulation
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        cost.append(0) # top [10,15,20,0]
+        
+        for i in range(len(cost) - 4, -1, -1):
+            cost[i] += min(cost[i+1], cost[i+2])
+            
+        return min(cost[0], cost[1])
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        if not cost:
+            return 0
+
+        dp = [0] * len(cost)
+        dp[0] = cost[0]
+		
+        if len(cost) >= 2:
+            dp[1] = cost[1]
+        
+        for i in range(2, len(cost)):
+            dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+        
+        return min(dp[-1], dp[-2])
+
+# DP using tabulation
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        n = len(cost)
+        dp = [0] * (n)
+        dp[0] = cost[0]
+		
+        if len(cost) >= 2:
+            dp[1] = cost[1]
+
+        for i in range(2, n):
+            dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+
+        return min(dp[-2], dp[-1])
