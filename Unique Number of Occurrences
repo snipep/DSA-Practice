@@ -1,0 +1,16 @@
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        map1 = {}
+        for i in arr:
+            if i in map1:
+                map1[i] += 1
+            else:
+                map1[i] = 1
+        
+        values_set = set()
+        for value in map1.values():
+            if value in values_set:
+                return False
+            values_set.add(value)
+
+        return True
