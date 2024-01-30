@@ -1,0 +1,10 @@
+class Solution:
+    def countCharacters(self, words: List[str], chars: str) -> int:
+        ans = []
+        for i in words:
+            for j in i:
+                if chars.count(j) < i.count(j):
+                    break
+            else:
+                ans.append(len(i))
+        return sum(ans) 
