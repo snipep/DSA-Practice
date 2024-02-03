@@ -1,0 +1,23 @@
+class Solution:
+    def totalMoney(self, days: int) -> int:
+        amount = 0
+        no_week = days // 7
+        remaining_day = days - 7*no_week
+
+        for i in range(no_week):
+            weekly_amount = (7+i)*(7+i+1)//2 - i*(i+1)//2
+            amount += weekly_amount
+        
+        print(amount)
+        amount += (remaining_day+no_week)*(remaining_day+no_week+1)/2 - no_week*(no_week + 1)//2
+        
+        return int(amount)
+        
+
+class Solution:
+    def totalMoney(self, days: int) -> int:
+        def arithmeticProgression(leading, last, terms):
+            return (leading+last)*terms//2
+
+        q, r = divmod(n, 7)
+        return arithmeticProgression() 
