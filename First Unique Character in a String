@@ -1,0 +1,14 @@
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        repeat = {}
+        for i in s:
+            if i not in repeat:
+                repeat[i]  = 1
+            elif i in repeat:
+                repeat[i] += 1
+        
+        for key,value in repeat.items():
+            if value == 1:
+                return s.index(key)
+            
+        return -1
