@@ -1,0 +1,11 @@
+class Solution:
+    def numSpecial(self, mat: List[List[int]]) -> int:
+        transposeMat=list(zip(*mat))
+        ans = 0
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if mat[i][j] == 1 and sum(mat[i]) == 1 and sum(transposeMat[j]) == 1:
+                    ans += 1
+        return ans
+        
+        
