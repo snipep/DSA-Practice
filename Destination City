@@ -1,0 +1,13 @@
+from typing import List
+
+class Solution:
+    def destCity(self, paths):
+        start_cities, end_cities = zip(*paths)
+        res = set()
+        for i, j in paths:
+            res.add(i)
+            res.add(j)
+
+        for i in res:
+            if i not in start_cities:
+                return i
