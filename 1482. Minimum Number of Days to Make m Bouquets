@@ -1,0 +1,35 @@
+# T.C ==>> O(nlogM) 
+# S.C ==>> O(1)
+
+class Solution:
+    def minDays(self, bloomDay: List[int], m: int, k: int) -> int:
+        n = len(bloomDay)
+        if m*k > n:
+            return -1
+
+        def isPossible(day):
+            count, num, i = 0, 0, 0
+            while i < n:
+                while i < n and bloomDay[i] <= day:
+                    count += 1
+                    if count == k:
+                        num += 1
+                        count = 0
+                    i += 1
+                if i<n and bloomDay[i] > day:
+                    count = 0
+                if num >= m:
+                    return True
+                i += 1
+            return num >= m
+                
+
+        low, high = min(bloomDay), max(bloomDay)
+        while low < high:
+            mid = low + (high - low)//2
+            if isPossible(mid):
+                high = mid
+            else:
+                low = mid + 1
+        
+        return low
