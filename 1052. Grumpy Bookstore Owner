@@ -1,0 +1,49 @@
+# T.C ==>> O(N)
+# S.C ==>> O(1)
+class Solution:
+    def maxSatisfied(self, customers: List[int], grumpy: List[int], minutes: int) -> int:
+        ans = 0
+        total = sum((1 - grumpy[i]) * customers[i] for i in range(len(customers)))
+        window_all = 0
+        window_partial = 0
+
+        for i in range(len(customers)):
+            window_all += customers[i]
+            window_partial += (1 - grumpy[i]) * customers[i]
+            if i + 1 >= minutes:
+                ans = max(ans, total - window_partial + window_all)
+                left = i - minutes + 1
+                window_all -= customers[left]
+                window_partial -= (1 - grumpy[left]) * customers[left]
+        
+        return ans
+
+
+# T.C ==>> O(N^2)
+# S.C ==>> O(1)
+class Solution:
+    def maxSatisfied(self, customers: List[int], grumpy: List[int], minutes: int) -> int:
+        if len(grumpy) == 1:
+            if grumpy[0] == 1 and minutes == 0:
+                return 0
+            else:
+                return customers[0]
+
+        def satisfy(start, end):
+            satisfied_customer = 0
+            for i in range(len(customers)):
+                if start <= i < end:
+                    satisfied_customer += customers[i]
+                else:
+                    if grumpy[i] == 0:
+                        satisfied_customer += customers[i]
+                    else:
+                        continue
+            return satisfied_customer
+
+        res = 0
+        for i in range(len(customers)):
+            res = max(res, satisfy(i, i + minutes))
+        
+
+        return res
